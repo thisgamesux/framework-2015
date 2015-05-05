@@ -51,14 +51,8 @@ int APIENTRY _tWinMain(_In_ HINSTANCE hInstance,
 		D3D::BeginFrame();
 
 		// Render here
-		
-		int x = 10;
-		int y = 10;
-		int w = 10;
-		int h = 10;
-
-		D3DRECT rec = { x, y, x + w, y + h };
-		D3D::device->Clear(1, &rec, D3DCLEAR_TARGET, D3DCOLOR_RGBA(255, 0, 0,255), 0, 0);
+		gRenderer->drawRect(10, 10, 10, 10, FWSDK::Color(0, 255, 0, 255));
+		gRenderer->drawString(10, 20, "Hello", FWSDK::Color(255, 0, 0, 255));
 
 		D3D::EndFrame();
 

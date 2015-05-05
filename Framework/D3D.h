@@ -115,3 +115,5 @@ struct D3D
 		}
 	};
 };
+
+extern D3D::D3D9Renderer* gRenderer;
