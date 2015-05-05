@@ -19,6 +19,9 @@
     <Filter Include="Source Files\Framework">
       <UniqueIdentifier>{6308cec7-cf6a-4c3f-a404-b7817a32afa7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Git">
+      <UniqueIdentifier>{e3d0e621-ec42-4d9f-ac01-1e614099d892}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -74,6 +77,11 @@
     </Image>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\LICENSE" />
+    <None Include="..\LICENSE">
+      <Filter>Git</Filter>
+    </None>
+    <None Include="..\README.md">
+      <Filter>Git</Filter>
+    </None>
   </ItemGroup>
 </Project>
