@@ -22,6 +22,12 @@
     <Filter Include="Git">
       <UniqueIdentifier>{e3d0e621-ec42-4d9f-ac01-1e614099d892}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Framework\UI">
+      <UniqueIdentifier>{c7f50e41-eb80-4c3b-b6e4-9f950b8bb1a4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Framework\UI">
+      <UniqueIdentifier>{2909d634-b3b3-4f23-af50-4ebee5dc51ab}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -48,6 +54,18 @@
     <ClInclude Include="D3D.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="UIObject.h">
+      <Filter>Header Files\Framework\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UIWindow.h">
+      <Filter>Header Files\Framework\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UIMouse.h">
+      <Filter>Header Files\Framework\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UIMain.h">
+      <Filter>Header Files\Framework\UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -61,6 +79,15 @@
     </ClCompile>
     <ClCompile Include="D3D.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Types.cpp">
+      <Filter>Source Files\Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="UIWindow.cpp">
+      <Filter>Source Files\Framework\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UIMain.cpp">
+      <Filter>Source Files\Framework\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

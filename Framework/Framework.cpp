@@ -12,6 +12,8 @@ HWND hWnd;										// current hwnd
 TCHAR szTitle[MAX_LOADSTRING];					// The title bar text
 TCHAR szWindowClass[MAX_LOADSTRING];			// the main window class name
 
+auto gpGui = new FWSDK::UIMainObject();
+
 // Forward declarations of functions included in this code module:
 ATOM				MyRegisterClass(HINSTANCE hInstance);
 BOOL				InitInstance(HINSTANCE, int);
@@ -45,14 +47,14 @@ int APIENTRY _tWinMain(_In_ HINSTANCE hInstance,
 	if (!D3D::Init(hWnd)) {
 		return FALSE;
 	}
+	gpGui->active = true;
+	gpGui->AddWindow("Test window", FWSDK::Area2D(10, 10, 200, 200), false);
 
 	while (GetMessage(&msg, NULL, 0, 0))
 	{
 		D3D::BeginFrame();
 
-		// Render here
-		gRenderer->drawRect(10, 10, 10, 10, FWSDK::Color(0, 255, 0, 255));
-		gRenderer->drawString(10, 20, "Hello", FWSDK::Color(255, 0, 0, 255));
+		gpGui->Draw(gRenderer);
 
 		D3D::EndFrame();
 
@@ -91,7 +93,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 {
    hInst = hInstance;
 
-   hWnd = CreateWindowEx(NULL, szWindowClass, szTitle, WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX, CW_USEDEFAULT, 0, 1024, 768, NULL, NULL, hInstance, NULL);
+   hWnd = CreateWindowEx(NULL, szWindowClass, szTitle, WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX, CW_USEDEFAULT, 0, 640, 480, NULL, NULL, hInstance, NULL);
 
    if (!hWnd) {
       return FALSE;
@@ -105,6 +107,8 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
+	gpGui->Input(wParam, lParam, message);
+
 	switch (message)
 	{
 	case WM_CLOSE:
