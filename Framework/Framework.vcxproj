@@ -81,6 +81,7 @@
     <ClInclude Include="D3D.h" />
     <ClInclude Include="Framework.h" />
     <ClInclude Include="FWSDK.h" />
+    <ClInclude Include="UIKeyboard.h" />
     <ClInclude Include="UIMain.h" />
     <ClInclude Include="UIMouse.h" />
     <ClInclude Include="UIWindow.h" />

@@ -1,7 +1,11 @@
 #pragma once
 
+struct UIMouse;
+
 struct UIObject
 {
+	virtual ~UIObject() {}
+
 	virtual void Size(int w, int h)
 	{
 		this->area.w = w;
@@ -15,9 +19,8 @@ struct UIObject
 	}
 
 	// Undefined
-	virtual void Draw(FWSDK::IRenderer* renderer) {}
-	virtual void Input(WPARAM wParam, LPARAM lParam, UINT msg) {}
-	virtual void Delete() {}
+	virtual void OnDraw(FWSDK::IRenderer* renderer) {}
+	virtual bool OnInput(FWSDK::UIMouse* mouse) { return false; }
 
 	FWSDK::UIObject*	parent;
 	FWSDK::ColorScheme	scheme;

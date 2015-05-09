@@ -5,12 +5,23 @@ struct UIMainObject : public FWSDK::UIObject
 	std::list<FWSDK::UIWindow*> windows;
 
 	FWSDK::UIMouse* mouse;
+	FWSDK::UIKeyboard* keyboard;
 
 	bool active;
 
 	UIMainObject() {
+		// Set default mouse data
 		mouse = new FWSDK::UIMouse();
+		mouse->parent = this;
+		mouse->scheme.front = FWSDK::Color(255, 255, 255, 255);
+
+		keyboard = new FWSDK::UIKeyboard();
+
 		active = false;
+	}
+
+	virtual ~UIMainObject() {
+		delete mouse;
 	}
 
 	// Add window, return pointer
@@ -40,7 +51,7 @@ struct UIMainObject : public FWSDK::UIObject
 
 	FWSDK::UIWindow* GetTopmostWindowAtPosition(int x, int y) {
 		for (auto window : windows) {
-			if (window->area.isPosInWindowArea(x, y)) {
+			if (window->area.containsPoint(FWSDK::Vec2D(x, y))) {
 				return window;
 			}
 		}
@@ -57,9 +68,8 @@ struct UIMainObject : public FWSDK::UIObject
 			FWSDK::UIWindow* pCurrent = (*i);
 
 			if (pCurrent == window) {
-				pCurrent->Delete();
 				windows.erase(i);
-				delete pCurrent; // Hope this works?
+				delete pCurrent;
 				break;
 			}
 		}
@@ -75,10 +85,8 @@ struct UIMainObject : public FWSDK::UIObject
 		return windows.front();
 	}
 
-	virtual void Draw(FWSDK::IRenderer* renderer);
-	virtual void Input(WPARAM wParam, LPARAM lParam, UINT msg);
+	bool Input(WPARAM wParam, LPARAM lParam, UINT msg);
 
-	virtual void Delete() {
-		delete mouse;
-	}
+	//
+	virtual void OnDraw(FWSDK::IRenderer* renderer);
 };

@@ -50,20 +50,38 @@ int APIENTRY _tWinMain(_In_ HINSTANCE hInstance,
 	gpGui->active = true;
 	gpGui->AddWindow("Test window", FWSDK::Area2D(10, 10, 200, 200), false);
 
-	while (GetMessage(&msg, NULL, 0, 0))
-	{
+	while (true) {
 		D3D::BeginFrame();
 
-		gpGui->Draw(gRenderer);
+		gpGui->OnDraw(gRenderer);
 
 		D3D::EndFrame();
+
+		MSG msg;
+
+		if (PeekMessageA(&msg, NULL, NULL, NULL, PM_REMOVE | PM_NOYIELD)) {
+			if (msg.message == WM_QUIT) {
+				ExitProcess(0);
+			}
+
+			if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg)) {
+				TranslateMessage(&msg);
+				DispatchMessage(&msg);
+			}
+		}
+	}
+
+	/*
+	while (GetMessage(&msg, NULL, 0, 0))
+	{
+
 
 		if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg))
 		{
 			TranslateMessage(&msg);
 			DispatchMessage(&msg);
 		}
-	}
+	}*/
 
 	return (int) msg.wParam;
 }
@@ -74,14 +92,14 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
 
 	wcex.cbSize = sizeof(WNDCLASSEX);
 
-	wcex.style			= CS_HREDRAW | CS_VREDRAW;
+	wcex.style			= 0;
 	wcex.lpfnWndProc	= WndProc;
 	wcex.cbClsExtra		= 0;
 	wcex.cbWndExtra		= 0;
 	wcex.hInstance		= hInstance;
 	wcex.hIcon			= LoadIcon(hInstance, MAKEINTRESOURCE(IDI_FRAMEWORK));
 	wcex.hCursor		= LoadCursor(NULL, IDC_ARROW);
-	wcex.hbrBackground	= (HBRUSH)(COLOR_WINDOW+1);
+	wcex.hbrBackground = (HBRUSH)GetStockObject(BLACK_BRUSH);
 	wcex.lpszMenuName	= 0;
 	wcex.lpszClassName	= szWindowClass;
 	wcex.hIconSm		= LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_SMALL));
@@ -99,6 +117,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
       return FALSE;
    }
 
+   ShowCursor(FALSE);
    ShowWindow(hWnd, nCmdShow);
    UpdateWindow(hWnd);
 
@@ -107,7 +126,9 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-	gpGui->Input(wParam, lParam, message);
+	if (gpGui->Input(wParam, lParam, message)) {
+		return 0;
+	}
 
 	switch (message)
 	{

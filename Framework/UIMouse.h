@@ -1,33 +1,32 @@
 #pragma once
 
+enum UIMouseClickState
+{
+	LEFT,
+	RIGHT,
+	MIDDLE
+};
+
 struct UIMouseClickStateData
 {
 	bool clicked;
 	bool held;
-	DWORD lastClick;
-
-	void Click() {
-		clicked = held = true;
-		lastClick = GetTickCount();
-	}
-
-	void Clear() {
-		clicked = held = false;
-		lastClick = NULL;
-	}
-};
-
-struct UIMouseDragData
-{
-	bool dragging;
-	FWSDK::UIWindow* window;
-	int windowXOffset;
-	int windowYOffset;
+	std::chrono::milliseconds::rep lastClick;
 };
 
 struct UIMouse : public FWSDK::UIObject
 {
-	virtual void Draw(FWSDK::IRenderer* renderer) 
+	UIMouse() {
+		area.x = area.y = 0;
+		area.w = area.h = 1;
+
+		for (auto &state : states) {
+			state.clicked = state.held = false;
+			state.lastClick = 0;
+		}
+	}
+
+	virtual void OnDraw(FWSDK::IRenderer* renderer) 
 	{
 		renderer->drawRect(area.x - 1, area.y - 1, 1, 12, scheme.outline);
 		renderer->drawRect(area.x, area.y - 1, 1, 1, scheme.outline);
@@ -60,37 +59,9 @@ struct UIMouse : public FWSDK::UIObject
 		renderer->drawRect(area.x + 7, area.y + 11, 1, 2, scheme.outline);
 	}
 
-	void ClearStates() {
-		leftState.Clear();
-		rightState.Clear();
+	bool insideObject(FWSDK::UIObject* obj) {
+		return (obj->area.containsPoint(FWSDK::Vec2D(this->area.x, this->area.y)));
 	}
 
-	void ClearClickStates() {
-		leftState.clicked = rightState.clicked = false;
-	}
-
-	virtual void Input(WPARAM wParam, LPARAM lParam, UINT msg)
-	{
-		switch (msg)
-		{
-			case WM_LBUTTONDOWN:
-			leftState.Click();
-			break;
-			case WM_LBUTTONUP:
-			leftState.held = false;
-			break;
-			case WM_RBUTTONDOWN:
-			rightState.Click();
-			break;
-			case WM_RBUTTONUP:
-			rightState.held = false;
-			break;
-		}
-	}
-
-	FWSDK::UIMouseClickStateData leftState;
-	FWSDK::UIMouseClickStateData rightState;
-	FWSDK::UIMouseDragData dragState;
-
-	bool drawMouseDebugInfo;
+	FWSDK::UIMouseClickStateData states[3];
 };

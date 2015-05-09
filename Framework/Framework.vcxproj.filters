@@ -66,6 +66,9 @@
     <ClInclude Include="UIMain.h">
       <Filter>Header Files\Framework\UI</Filter>
     </ClInclude>
+    <ClInclude Include="UIKeyboard.h">
+      <Filter>Header Files\Framework\UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">

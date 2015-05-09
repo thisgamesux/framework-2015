@@ -8,5 +8,7 @@ struct UIWindow : public FWSDK::UIObject
 	// Set to true to always render this window
 	bool drawWhenInactive;
 
-	virtual void Draw(FWSDK::IRenderer* renderer);
+	//
+	virtual void OnDraw(FWSDK::IRenderer* renderer);
+	virtual bool OnInput(FWSDK::UIMouse* mouse);
 };
