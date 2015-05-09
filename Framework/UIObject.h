@@ -20,7 +20,7 @@ struct UIObject
 
 	// Undefined
 	virtual void OnDraw(FWSDK::IRenderer* renderer) {}
-	virtual bool OnInput(FWSDK::UIMouse* mouse) { return false; }
+	virtual bool OnInput(FWSDK::UIMouse* mouse, FWSDK::UIKeyboard* keyboard) { return false; }
 
 	FWSDK::UIObject*	parent;
 	FWSDK::ColorScheme	scheme;

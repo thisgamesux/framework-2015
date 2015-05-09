@@ -73,7 +73,7 @@ bool FWSDK::UIMainObject::Input(WPARAM wParam, LPARAM lParam, UINT msg) {
 	}
 
 	for (auto window : windows) {
-		if (window->OnInput(mouse)) {
+		if (window->OnInput(mouse, keyboard)) {
 			break;
 		}
 	}

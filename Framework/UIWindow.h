@@ -10,5 +10,5 @@ struct UIWindow : public FWSDK::UIObject
 
 	//
 	virtual void OnDraw(FWSDK::IRenderer* renderer);
-	virtual bool OnInput(FWSDK::UIMouse* mouse);
+	virtual bool OnInput(FWSDK::UIMouse* mouse, FWSDK::UIKeyboard* keyboard);
 };

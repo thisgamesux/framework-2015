@@ -15,9 +15,10 @@ namespace FWSDK
 #include "Types.h"
 #include "IRenderer.h"
 
-#include "UIObject.h"
-#include "UIWindow.h"
-#include "UIMouse.h"
 #include "UIKeyboard.h"
+#include "UIObject.h"
+#include "UIMouse.h"
+
+#include "UIWindow.h"
 #include "UIMain.h"
 }
